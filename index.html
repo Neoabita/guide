@@ -581,6 +581,170 @@
         .footer img { height: 15px; opacity: 0.4; }
         .footer span { font-size: 11px; color: rgba(255,255,255,0.18); font-weight: 300; }
 
+        /* ===== POPUP OVERLAY ===== */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(20, 18, 16, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-card {
+            background: var(--white);
+            border-radius: 24px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(24px) scale(0.97);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.2);
+        }
+
+        .popup-overlay.active .popup-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--warm-200);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+            z-index: 2;
+        }
+
+        .popup-close:hover { background: var(--warm-300); }
+        .popup-close svg { width: 16px; height: 16px; stroke: var(--ink); stroke-width: 2; }
+
+        .popup-header {
+            padding: 40px 36px 0;
+            text-align: center;
+        }
+
+        .popup-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .popup-header h3 em { font-style: italic; color: var(--coral); }
+
+        .popup-header p {
+            font-size: 14px;
+            color: var(--warm-500);
+            font-weight: 300;
+        }
+
+        .popup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 28px 28px 20px;
+        }
+
+        .popup-item {
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--warm-100);
+        }
+
+        .popup-item img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .popup-item-body { padding: 14px 16px; }
+
+        .popup-item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 2px;
+        }
+
+        .popup-item-price {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--coral);
+        }
+
+        .popup-footer {
+            padding: 0 28px 28px;
+            text-align: center;
+        }
+
+        .popup-footer-text {
+            font-size: 12px;
+            color: var(--warm-400);
+            font-weight: 300;
+        }
+
+        .popup-footer-text strong { color: var(--warm-500); font-weight: 500; }
+
+        /* Discrete link */
+        .voir-realisations-link {
+            font-size: 13px;
+            color: var(--coral);
+            text-decoration: none;
+            font-weight: 400;
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .voir-realisations-link:hover {
+            border-bottom-color: var(--coral);
+        }
+
+        .voir-realisations-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--coral);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        @media (max-width: 1024px) {
+            .popup-card { border-radius: 20px; max-height: 80vh; }
+            .popup-header { padding: 32px 20px 0; }
+            .popup-header h3 { font-size: 22px; }
+            .popup-grid { grid-template-columns: 1fr; padding: 20px 16px 16px; gap: 10px; }
+            .popup-item img { height: 180px; }
+            .popup-footer { padding: 0 16px 20px; }
+        }
+
         /* ===== KEYFRAMES ===== */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -683,6 +847,12 @@
                         <div class="reassurance-item">Garanti sans publicité</div>
                         <div class="reassurance-dot"></div>
                         <div class="reassurance-item">100% gratuit</div>
+                    </div>
+                    <div style="margin-top:16px; text-align:center;">
+                        <a class="voir-realisations-link" onclick="openPopup()">
+                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                            Voir nos réalisations
+                        </a>
                     </div>
                 </div>
             </div>
@@ -824,11 +994,86 @@
         <span>© 2026 Neoabita · Tous droits réservés</span>
     </footer>
 
+    <!-- ===== POPUP RÉALISATIONS ===== -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-card">
+            <button class="popup-close" onclick="closePopup()">
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="popup-header">
+                <h3>Nos dernières <em>réalisations</em></h3>
+                <p>Plus de 100 villas haut de gamme construites depuis 2015</p>
+            </div>
+            <div class="popup-grid">
+                <div class="popup-item">
+                    <img src="images/Neoabita-07-25-21.jpg" alt="Villa">
+                    <div class="popup-item-body">
+                        <div class="popup-item-name">Projet Matthieu & Claudie</div>
+                        <div class="popup-item-price">990 000 €</div>
+                    </div>
+                </div>
+                <div class="popup-item">
+                    <img src="images/villa_jolie_realisation.jpeg" alt="Villa">
+                    <div class="popup-item-body">
+                        <div class="popup-item-name">Projet Élodie & Clément</div>
+                        <div class="popup-item-price">1 490 000 €</div>
+                    </div>
+                </div>
+                <div class="popup-item">
+                    <img src="images/realisation-4.jpg" alt="Villa">
+                    <div class="popup-item-body">
+                        <div class="popup-item-name">Projet Nicolas & Christel</div>
+                        <div class="popup-item-price">1 090 000 €</div>
+                    </div>
+                </div>
+                <div class="popup-item">
+                    <img src="images/realisation-6.jpg" alt="Villa">
+                    <div class="popup-item-body">
+                        <div class="popup-item-name">Projet Kathleen & Sylvain</div>
+                        <div class="popup-item-price">1 370 000 €</div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <p class="popup-footer-text"><strong>20 projets exclusifs par an</strong> · Budgets de 800K€ à 3M€+</p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function handleSubmit(e) { e.preventDefault(); window.location.href = '/confirmation'; }
+        function handleSubmit(e) { e.preventDefault(); window.location.href = 'page2-confirmation.html'; }
         window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 16); });
         const obs = new IntersectionObserver((e) => { e.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); }); }, { threshold: 0.1 });
         document.querySelectorAll('.sr').forEach((el, i) => { el.style.transitionDelay = `${Math.min(i * 0.06, 0.4)}s`; obs.observe(el); });
+
+        // Popup logic
+        let popupShown = false;
+
+        function openPopup() {
+            document.getElementById('popup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            popupShown = true;
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on overlay click
+        document.getElementById('popup').addEventListener('click', function(e) {
+            if (e.target === this) closePopup();
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePopup();
+        });
+
+        // Auto-show after 10s if not already shown
+        setTimeout(function() {
+            if (!popupShown) openPopup();
+        }, 10000);
     </script>
 
 </body>
