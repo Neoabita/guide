@@ -1817,6 +1817,7 @@
                 const originalText = btn.textContent;
                 btn.textContent = "Envoi...";
                 btn.disabled = true;
+                (window.dataLayer || []).push({ event: "lead_captured" });
 
                 fetch("/api/subscribe", {
                     method: "POST",
